@@ -111,17 +111,17 @@
     "quickshell-config": {
       "flake": false,
       "locked": {
-        "lastModified": 1793025823,
-        "narHash": "sha256-ogPWTuZV+dvpi+bbses2Zn9PVhFePlsHPKRoPQQarO4=",
+        "lastModified": 1793256161,
+        "narHash": "sha256-63qLTliH3CA17YEUajqUScm+bZVhup68mxGXH067MEc=",
         "ref": "refs/heads/main",
-        "rev": "de7a198207017f2df3677a4209676efa0a7f816b",
-        "revCount": 7,
+        "rev": "ecd570c3eb45f534020f83d5167bf0977f5cf0da",
+        "revCount": 15,
         "type": "git",
-        "url": "https://codeberg.org/lowwki/quickshell"
+        "url": "https://codeberg.org/Koesinn/quickshell"
       },
       "original": {
         "type": "git",
-        "url": "https://codeberg.org/lowwki/quickshell"
+        "url": "https://codeberg.org/Koesinn/quickshell"
       }
     },
     "root": {

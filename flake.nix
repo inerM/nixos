@@ -10,7 +10,7 @@
     preservation.url = "github:nix-community/preservation";
 
     quickshell-config = {                                                 # linked to my repo
-    	url = "git+https://codeberg.org/lowwki/quickshell";     
+    	url = "git+https://codeberg.org/Koesinn/quickshell";     
 	    flake = false;
     };
      nautilus-my-computer = {

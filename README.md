@@ -41,12 +41,12 @@ Necessary window manager shortcuts: discover lot more :)
 
 ---
 > [!IMP-NOTE]
-> Regarding launcher option keybinds refer to the [quickshell-config](https://codeberg.org/lowwki/quickshell)
+> Regarding launcher option keybinds refer to the [quickshell-config](https://codeberg.org/Koesinn/quickshell)
 
 ## Installation
 >[!IMPORTANT]
 >Impermanence is **optional**. If your disk is not btrfs, or you just don't want it, skip step 1 and the config works on any normal filesystem.
->Repo clone is required. Remote build is not fully prepared yet. But remote launch app via `nix run "git+https://codeberg.org/lowwki/nixos.git#Appname"` is supported for the wrapped apps.
+>Repo clone is required. Remote build is not fully prepared yet. But remote launch app via `nix run "git+https://codeberg.org/Koesinn/nixos.git#Appname"` is supported for the wrapped apps.
 ### 1. Choose: with or without impermanence
 - **With impermanence** (btrfs): refer to [Impermanence](#impermanence)
   ```nix
@@ -59,7 +59,7 @@ Necessary window manager shortcuts: discover lot more :)
 
 ### 2. Clone the repository
 ```bash
-git clone https://codeberg.org/lowwki/nixos.git ~/<path to your choice>/< eg. ~/nixos/ >
+git clone https://codeberg.org/Koesinn/nixos.git ~/<path to your choice>/< eg. ~/nixos/ >
 cd ~/<cloned path>
 rm -rf .git
 ```
@@ -171,7 +171,7 @@ ls /nix/store | wc -l   # should still be thousands
 No idea dude, mine worked so you are on your own.
 
 ## Hosts & Users
-Default host: `potato`, username: `dihh`, password: `dihh`.
+Default host: `potato`, username: `koesinn`, password: `dihh`.
 Change the username or password in `nodes/users/primaryuser.nix` if you wish.
 
 > [!WARNING]
@@ -198,7 +198,7 @@ Font is `IBM Plex Sans` and cursor is `Bibata Modern classic`. More theming opti
 All the viral Qs rices are mid, overanimated, funky or in berif, type of shii. (imo)
 So I forked [A Dumb Human's](https://git.voidarc.co.uk/voidarc/quickshell)(voidarc's) shell, which was made only for hyprland, to make it work for niri.
 A cool multifuntion launcher is included.
-for Detailed info read [Quickshell-config](https://codeberg.org/lowwki/quickshell)
+for Detailed info read [Quickshell-config](https://codeberg.org/Koesinn/quickshell)
 
 ## Holy Thanks
 
