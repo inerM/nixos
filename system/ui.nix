@@ -2,11 +2,10 @@
 	
 	flake.nixosModules.ui = { pkgs, ... }: 
    let modules = with self.nixosModules; [
-	        gtk
-   	        fonts
-	        ly
-        ];
-   
+	      gtk
+   	    fonts
+	      ly
+      ];
    in {
    	imports = modules;
     

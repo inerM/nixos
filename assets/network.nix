@@ -4,6 +4,10 @@
       enable = true;
       dns = "systemd-resolved";
     };
+    networking.modemmanager.enable = false;
+
+    systemd.services.NetworkManager-wait-online.enable = false;
+
 
     services.resolved = {
       enable = true;

@@ -1,6 +1,6 @@
 {inputs, ...}: {
    imports = [
-      inputs.wrapper-modules.flakeModules.wrappers
+      inputs.wrappers.flakeModules.wrappers
   #
   #   # currently unused
       inputs.flake-parts.flakeModules.modules

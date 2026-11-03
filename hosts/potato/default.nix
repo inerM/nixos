@@ -13,17 +13,18 @@
 		
 		imports = [
 		    ./_hw.nix                  # imports the hardware-configuration.nix. imports as yours accordingly.
-  		  ./_legacy/_boot.nix
-  		  ./_legacy/_locale.nix                          # refers to readme for details 
+  		  ./_boot.nix
+  		  ./_locale.nix                          # refers to readme for details 
   		]
   		++ (with self.nixosModules; [ 
-	    impermanence
+	    	impermanence
         potato_dri                                         # old cpu drivers              # user
-		ui      
-		services
+				ui      
+				services
 
         primaryuser
-		apps
+				apps
+				
     ]);
   
      networking.hostName = "potato";
