@@ -8,7 +8,7 @@
   }: {
     config = {
       settings = {
-        theme = "gruvbox-hard";
+        theme = "mono";
 
         editor = {
           true-color = true;
@@ -25,138 +25,154 @@
         };
       };
 
-      themes.gruvbox-hard = {
+      themes.mono = {
         palette = {
-          bg      = self.theme.base00;
-          bg1     = self.theme.base01;
-          bg2     = self.theme.base02;
-          gray    = self.theme.base03;
-          fg4     = self.theme.base04;
-          fg3     = self.theme.base05;
-          fg      = self.theme.base06;
-          fg0     = self.theme.base07;
-          red     = self.theme.base08;
-          orange  = self.theme.base09;
-          yellow  = self.theme.base0A;
-          green   = self.theme.base0B;
-          cyan    = self.theme.base0C;
-          blue    = self.theme.base0D;
-          magenta = self.theme.base0E;
+          # neutral ramp
+          bg   = self.theme.base00;
+          bg1  = self.theme.base01;
+          bg2  = self.theme.base02;
+          gray = self.theme.comment; # readable neutral comments
+          fg4  = self.theme.base04;
+          fg3  = self.theme.base05;
+          fg   = self.theme.base06;
+          fg0  = self.theme.base07;
+
+          # muted syntax accents, independent of neutral UI colors
+          emph = self.theme.base07;
+          num  = self.theme.base09;
+          type = self.theme.base0A;
+          str  = self.theme.base0B;
+          spec = self.theme.base0C;
+          fn   = self.theme.base0D;
+          kw   = self.theme.base0E;
+          dim  = self.theme.base0F;
+          red  = self.theme.base08;
+          wr = "#e72116";
         };
-      
+
+        # ---------- comments ----------
         "comment" = "gray";
-      
-        "keyword" = "red";                      # Keyword, Statement, Conditional, Repeat
-        "keyword.control" = "red";
-        "keyword.control.import" = "cyan";      # Include
-        "keyword.directive" = "cyan";           # PreProc, Define
-        "keyword.storage" = "orange";           # StorageClass
-        "keyword.operator" = "red";
-        "label" = "red";
-      
-        "function" = {fg = "green"; modifiers = ["bold" "italic"];};
-        "function.builtin" = {fg = "green"; modifiers = ["bold" "italic"];};
-        "function.method" = {fg = "green"; modifiers = ["bold" "italic"];};
-        "function.macro" = "orange";            # Macro
-      
-        "type" = {fg = "cyan"; modifiers = ["bold"];};
-        "type.builtin" = {fg = "cyan"; modifiers = ["bold"];};
-        "type.parameter" = {fg = "cyan"; modifiers = ["bold"];};
-        "constructor" = {fg = "cyan"; modifiers = ["bold"];};
-        "namespace" = "cyan";                   # Structure
-        "attribute" = "orange";
-      
-        "variable" = "blue";                    # @variable and Identifier
-        "variable.builtin" = "blue";
-        "variable.parameter" = {fg = "blue"; modifiers = ["bold"];};
-        "variable.other.member" = "blue";
-      
-        "constant" = "magenta";
-        "constant.numeric" = "magenta";
-        "constant.builtin" = "magenta";
-        "constant.builtin.boolean" = "magenta";
-        "constant.character" = "magenta";
-        "constant.character.escape" = "red";    # SpecialChar
-      
-        "string" = {fg = "green"; modifiers = ["italic"];};
-        "string.regexp" = "orange";
-        "string.special" = "orange";
-        "string.special.path" = {fg = "orange"; modifiers = ["underlined"];};
-        "string.special.url" = {fg = "red"; modifiers = ["underlined"];};   # Underlined
-        "string.special.symbol" = "orange";
-      
-        "operator" = "orange";
-        "special" = "orange";
-        "tag" = "red";
-      
-        "punctuation" = "orange";               # @punctuation and Delimiter
-        "punctuation.delimiter" = "orange";
-        "punctuation.bracket" = "orange";
-        "punctuation.special" = "orange";
-      
+
+        # ---------- keywords ----------
+        "keyword" = {fg = "kw"; modifiers = ["bold"];};
+        "keyword.control" = {fg = "kw"; modifiers = ["bold"];};
+        "keyword.control.import" = {fg = "spec"; modifiers = ["bold"];};
+        "keyword.directive" = {fg = "spec"; modifiers = ["bold"];};
+        "keyword.storage" = {fg = "kw"; modifiers = ["bold"];};
+        "keyword.operator" = "fg4";
+        "label" = "spec";
+
+        # ---------- functions ----------
+        "function" = {fg = "fn"; modifiers = ["bold"];};
+        "function.builtin" = {fg = "fn"; modifiers = ["bold"];};
+        "function.method" = {fg = "fn"; modifiers = ["bold"];};
+        "function.macro" = {fg = "fn"; modifiers = ["italic"];};
+
+        # ---------- types ----------
+        "type" = {fg = "type"; modifiers = ["italic"];};
+        "type.builtin" = {fg = "type"; modifiers = ["italic"];};
+        "type.parameter" = {fg = "type"; modifiers = ["italic"];};
+        "constructor" = {fg = "type"; modifiers = ["italic"];};
+        "namespace" = "fg3";
+        "attribute" = "fn";
+
+        # ---------- variables ----------
+        "variable" = "fg";
+        "variable.builtin" = {fg = "fg"; modifiers = ["italic"];};
+        "variable.parameter" = {fg = "fg3"; modifiers = ["italic"];};
+        "variable.other.member" = "fn";
+
+        # ---------- constants ----------
+        "constant" = "num";
+        "constant.numeric" = "num";
+        "constant.builtin" = {fg = "kw"; modifiers = ["bold"];};
+        "constant.builtin.boolean" = {fg = "kw"; modifiers = ["bold"];};
+        "constant.character" = "spec";
+        "constant.character.escape" = {fg = "spec"; modifiers = ["bold"];};
+
+        # ---------- strings ----------
+        "string" = "str";
+        "string.regexp" = "num";
+        "string.special" = "num";
+        "string.special.path" = {fg = "num"; modifiers = ["underlined"];};
+        "string.special.url" = {fg = "fg3"; modifiers = ["underlined"];};
+        "string.special.symbol" = "num";
+
+        # ---------- operators / punctuation ----------
+        "operator" = "fg4";
+        "special" = "num";
+        "tag" = {fg = "kw"; modifiers = ["bold"];};
+
+        "punctuation" = "dim";
+        "punctuation.delimiter" = "dim";
+        "punctuation.bracket" = "dim";
+        "punctuation.special" = "fg4";
+
         # ---------- markup ----------
-        "markup.heading" = {fg = "blue"; modifiers = ["bold"];};   # Title
-        "markup.heading.marker" = "orange";
-        "markup.list" = "red";
+        "markup.heading" = {fg = "fg0"; modifiers = ["bold"];};
+        "markup.heading.marker" = "dim";
+        "markup.list" = "kw";
         "markup.bold" = {modifiers = ["bold"];};
         "markup.italic" = {modifiers = ["italic"];};
         "markup.strikethrough" = {modifiers = ["crossed_out"];};
-        "markup.link.url" = {fg = "red"; modifiers = ["underlined"];};
-        "markup.link.text" = "blue";
-        "markup.link.label" = "blue";
-        "markup.quote" = "gray";
-        "markup.raw" = "green";
-      
+        "markup.link.url" = {fg = "fg3"; modifiers = ["underlined"];};
+        "markup.link.text" = "fn";
+        "markup.link.label" = "fn";
+        "markup.quote" = {fg = "gray"; modifiers = ["italic"];};
+        "markup.raw" = "str";
+
         # ---------- diff ----------
-        "diff.plus" = "green";
+        "diff.plus" = "str";
         "diff.minus" = "red";
-        "diff.delta" = "blue";
-      
-        # ---------- diagnostics ----------
-        "error" = "red";
-        "warning" = "orange";
-        "info" = "yellow";
-        "hint" = "yellow";
-        "diagnostic.error" = {underline = {color = "red"; style = "curl";};};
-        "diagnostic.warning" = {underline = {color = "orange"; style = "curl";};};
-        "diagnostic.info" = {underline = {color = "yellow"; style = "curl";};};
-        "diagnostic.hint" = {underline = {color = "yellow"; style = "curl";};};
+        "diff.delta" = "num";
+
+        # ---------- diagnostics (distinguished by underline style) ----------
+        "error" = {fg = "wr"; modifiers = ["bold"];};
+        "warning" = "num";
+        "info" = "fn";
+        "hint" = "gray";
+        "diagnostic.error" = {underline = {color = "wr"; style = "curl";};};
+        "diagnostic.warning" = {underline = {color = "num"; style = "dashed";};};
+        "diagnostic.info" = {underline = {color = "fn"; style = "dotted";};};
+        "diagnostic.hint" = {underline = {color = "gray"; style = "dotted";};};
         "diagnostic.unnecessary" = {modifiers = ["dim"];};
-      
+
         # ---------- ui ----------
-        "ui.background" = {};                   # kitty's background shows through
+        "ui.background" = {fg = "fg"; bg = "bg";};
         "ui.text" = "fg";
         "ui.text.focus" = {bg = "bg2";};
         "ui.text.inactive" = "gray";
         "ui.linenr" = "gray";
-        "ui.linenr.selected" = "fg4";           # CursorLineNr
+        "ui.linenr.selected" = {fg = "fg0"; modifiers = ["bold"];};
         "ui.cursorline.primary" = {bg = "bg1";};
-        "ui.cursor.match" = {bg = "gray";};     # MatchParen
-        "ui.selection" = {bg = "bg2";};         # Visual
-        "ui.selection.primary" = {bg = "bg2";};
+        "ui.cursor.match" = {fg = "fg0"; bg = "gray"; modifiers = ["bold"];};
+
+        # bright block with dark text so selections pop
+        "ui.selection" = {fg = "bg"; bg = "fg3";};
+        "ui.selection.primary" = {fg = "bg"; bg = "fg";};
         "ui.highlight" = {bg = "bg2";};
-      
+
         "ui.statusline" = {fg = "fg4"; bg = "bg2";};
         "ui.statusline.inactive" = {fg = "gray"; bg = "bg1";};
-        "ui.statusline.normal" = {fg = "bg"; bg = "blue"; modifiers = ["bold"];};
-        "ui.statusline.insert" = {fg = "bg"; bg = "green"; modifiers = ["bold"];};
-        "ui.statusline.select" = {fg = "bg"; bg = "yellow"; modifiers = ["bold"];};
-      
+        "ui.statusline.normal" = {fg = "bg"; bg = "fg3"; modifiers = ["bold"];};
+        "ui.statusline.insert" = {fg = "bg"; bg = "str"; modifiers = ["bold"];};
+        "ui.statusline.select" = {fg = "bg"; bg = "num"; modifiers = ["bold"];};
+
         "ui.bufferline" = {fg = "gray"; bg = "bg1";};
-        "ui.bufferline.active" = {fg = "green"; bg = "bg1";};   # TabLineSel
+        "ui.bufferline.active" = {fg = "fg0"; bg = "bg2"; modifiers = ["bold"];};
         "ui.bufferline.background" = {bg = "bg1";};
-      
+
         "ui.popup" = {fg = "fg3"; bg = "bg1";};
         "ui.help" = {fg = "fg3"; bg = "bg1";};
         "ui.menu" = {fg = "fg3"; bg = "bg1";};
-        "ui.menu.selected" = {bg = "bg2";};
+        "ui.menu.selected" = {fg = "fg0"; bg = "bg2"; modifiers = ["bold"];};
         "ui.window" = "bg2";
-      
-        "ui.virtual.whitespace" = "gray";
+
+        "ui.virtual.whitespace" = "bg2";
         "ui.virtual.indent-guide" = "bg2";
         "ui.virtual.ruler" = {bg = "bg1";};
         "ui.virtual.inlay-hint" = {fg = "gray"; modifiers = ["italic"];};
-        "ui.virtual.jump-label" = {fg = "orange"; modifiers = ["bold"];};
+        "ui.virtual.jump-label" = {fg = "fg0"; modifiers = ["bold"];};
       };
 
     };

@@ -1,11 +1,12 @@
 { ... }: {
-  flake.nixosModules.primaryuser = {
+  flake.nixosModules.primaryuser = { config, ... }:
+  {
 
-    users.users.inerm = {        # change user01 to to your username
+    sops.secrets.user_password.neededForUsers = true;
+    users.users.inerm = {     
       isNormalUser = true;
-      initialPassword = "dihh";
-   #   hashedPasswordFile = "/persist/passwords/dihh"; (only needed if impermanence opting)
-      description = "inert M";   #change your YOURNAME to yours.
+      hashedPasswordFile = config.sops.secrets.user_password.path;
+      description = "inert M";  
       extraGroups = [
         "wheel"
         "networkmanager"
@@ -14,6 +15,9 @@
 	      "lp"
        ];
      };
-  #  users.users.root.hashedPasswordFile  = "/persist/passwords/root";
+
+
+    sops.secrets.root_password.neededForUsers = true;
+    users.users.root.hashedPasswordFile  = config.sops.secrets.root_password.path;
    };
 }

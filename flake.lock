@@ -117,11 +117,11 @@
         "rev": "ecd570c3eb45f534020f83d5167bf0977f5cf0da",
         "revCount": 15,
         "type": "git",
-        "url": "https://codeberg.org/Koesinn/quickshell"
+        "url": "https://codeberg.org/inerM/quickshell"
       },
       "original": {
         "type": "git",
-        "url": "https://codeberg.org/Koesinn/quickshell"
+        "url": "https://codeberg.org/inerM/quickshell"
       }
     },
     "root": {
@@ -131,7 +131,28 @@
         "nixpkgs": "nixpkgs",
         "preservation": "preservation",
         "quickshell-config": "quickshell-config",
+        "sops-nix": "sops-nix",
         "wrappers": "wrappers"
+      }
+    },
+    "sops-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793657466,
+        "narHash": "sha256-GoOvpdsjO5hqZuO6T6ok9u6sJEjO0iPli2zRr9oNUNw=",
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "rev": "b18e01ce148eb3efff5de2f2d3181ca53b2b2a54",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "type": "github"
       }
     },
     "systems": {

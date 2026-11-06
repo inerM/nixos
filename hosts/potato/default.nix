@@ -23,9 +23,12 @@
 				services
 
         primaryuser
+        sops
 				apps
 				
-    ]);
+    ]) ++ [
+    inputs.sops-nix.nixosModules.sops
+    ];
   
      networking.hostName = "potato";
   };

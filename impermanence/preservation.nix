@@ -27,7 +27,7 @@
         fileSystems.${persist}.neededForBoot = true;
 
 	systemd.suppressedSystemUnits = [ "systemd-machine-id-commit.service"];
-	environment.etc."machine-id".source = "/persist/etc/machine-id";
+	# environment.etc."machine-id".source = "/persist/etc/machine-id";
 
         my.persist = { 
         homeDirectories = [

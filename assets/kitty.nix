@@ -1,3 +1,4 @@
+
 {
   self,
   inputs,
@@ -12,64 +13,92 @@
       type = lib.types.str;
       default = "";
     };
-    config = {
-      appendFlag = lib.mkAfter (lib.optionals (config.shell != "") [config.shell]);
-      env.FONTCONFIG_FILE = toString (config.pkgs.makeFontsConf {
-        fontDirectories = [ 
-            config.pkgs.ibm-plex
-            config.pkgs.nerd-fonts.symbols-only
-            config.pkgs.noto-fonts-color-emoji
-          ];
-      });
-      settings = {
-        enable_audio_bell = "no";
 
+    config = {
+      appendFlag = lib.mkAfter (
+        lib.optionals (config.shell != "") [config.shell]
+      );
+
+      env.FONTCONFIG_FILE = toString (config.pkgs.makeFontsConf {
+        fontDirectories = [
+          config.pkgs.ibm-plex
+          config.pkgs.nerd-fonts.symbols-only
+          config.pkgs.noto-fonts-color-emoji
+        ];
+      });
+
+      settings = {
+        # General
+        enable_audio_bell = "no";
+        background_opacity = 0.85;
+
+        # Fonts
         font_size = 10;
         font_family = "IBM Plex Mono";
 
-        cursor_text_color = "background";
-
+        # Shell
         allow_remote_control = "yes";
         shell_integration = "enabled";
 
-        cursor = "#819C85";
+        # Cursor
+        cursor = self.theme.base06;
+        cursor_text_color = self.theme.base00;
         cursor_shape = "block";
+
+        # Cursor trail
         cursor_trail = 10;
-        cursor_trail_color = "#3E5641";
+        cursor_trail_color = self.theme.base03;
         cursor_trail_decay = "0.2 0.5";
-	
-      	window_padding_width = 12;
-	      confirm_os_window_close = 0;
 
+        # Window
+        window_padding_width = 12;
+        confirm_os_window_close = 0;
+
+        # Obsidian background / foreground
         background = self.theme.base00;
-        foreground = self.theme.base07;
+        foreground = self.theme.base06;
 
-        selection_foreground = self.theme.base02;
-        selection_background = self.theme.base01;
+        # High contrast selection
+        selection_foreground = self.theme.base00;
+        selection_background = self.theme.base07;
 
-        active_tab_foreground = self.theme.base0B;
-        active_tab_background = self.theme.base03;
+        # Tabs
+        active_tab_foreground = self.theme.base00;
+        active_tab_background = self.theme.base06;
+
+        inactive_tab_foreground = self.theme.base04;
         inactive_tab_background = self.theme.base01;
 
+        # Muted ANSI colors for programs using the terminal palette
         color0 = self.theme.base00;
-        color8 = self.theme.base02;
+        color8 = self.theme.comment;
+
         color1 = self.theme.base08;
         color9 = self.theme.base08;
+
         color2 = self.theme.base0B;
         color10 = self.theme.base0B;
+
         color3 = self.theme.base0A;
         color11 = self.theme.base0A;
+
         color4 = self.theme.base0D;
         color12 = self.theme.base0D;
+
         color5 = self.theme.base0E;
         color13 = self.theme.base0E;
+
         color6 = self.theme.base0C;
         color14 = self.theme.base0C;
-        color7 = self.theme.base03;
-        color15 = self.theme.base03;
 
-        symbol_map = "U+E000-U+F8FF,U+F0000-U+FFFFD Symbols Nerd Font Mono";
+        color7 = self.theme.base05;
+        color15 = self.theme.base07;
+
+        # Nerd Font symbols
+        symbol_map =
+          "U+E000-U+F8FF,U+F0000-U+FFFFD Symbols Nerd Font Mono";
       };
+
       extraConfig = lib.concatMapStringsSep "\n" (m: "map ${m}") [
         "alt+1 goto_tab 1"
         "alt+2 goto_tab 2"

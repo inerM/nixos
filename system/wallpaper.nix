@@ -1,3 +1,3 @@
 {
-  flake.wallpaper = ../assets/graphics/gruvbox-mountain-village.png;
+  flake.wallpaper = ../assets/graphics/m2.jpg;
 }

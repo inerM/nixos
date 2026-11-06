@@ -1,3 +1,4 @@
+
 {
   inputs,
   self,
@@ -5,48 +6,66 @@
 }: {
   flake.wrappersModules.niri = {
     config,
-    lib, 
+    lib,
     ...
   }: {
-  options.terminal = lib.mkOption {
+    options.terminal = lib.mkOption {
       type = lib.types.str;
       default = "kitty";
     };
-  config = {
-    settings = let
-        quickshellExe = lib.getExe self.packages.${config.pkgs.stdenv.hostPlatform.system}.quickshell;
-        launcher = fn: [ quickshellExe "ipc" "call" "launcher" fn ];
-in {
-    prefer-no-csd = _: { };
-    hotkey-overlay = {
-	  skip-at-startup = _: { };
-	 };
 
-    input = {
-      focus-follows-mouse = _: { };
-      keyboard = {
-        xkb = {
-          layout = "us";
-        };
-     };
+    config = {
+      settings = let
+        quickshellExe =
+          lib.getExe
+          self.packages.${config.pkgs.stdenv.hostPlatform.system}.quickshell;
 
-    touchpad = {
-      natural-scroll = _: { };
-      tap = _: { };
-      dwt = _:{ };
-     };
+        launcher = fn: [
+          quickshellExe "ipc" "call" "launcher" fn
+        ];
+      in {
 
-    mouse = {
-      accel-profile = "flat";
-     };
-    };
-
-    binds = {
-          "Mod+Space".spawn = launcher "apps";        # apps, plus the system actions when you type
-          "Mod+Alt+Space".spawn   = launcher "files";       # starts with "f "
-          "Mod+Shift+V".spawn     = launcher "clipboard";   # starts with "c "
-          "Mod+Period".spawn      = launcher "emoji";       # starts with "e "
+        layer-rules = [
+          {
+            matches = [
+              { namespace = "^wallpaper$"; }
+            ];
+            place-within-backdrop = true;
+          }
+        ];
         
+        prefer-no-csd = _: { };
+
+        hotkey-overlay = {
+          skip-at-startup = _: { };
+        };
+
+        input = {
+          focus-follows-mouse = _: { };
+
+          keyboard = {
+            xkb = {
+              layout = "us";
+            };
+          };
+
+          touchpad = {
+            natural-scroll = _: { };
+            tap = _: { };
+            dwt = _: { };
+          };
+
+          mouse = {
+            accel-profile = "flat";
+          };
+        };
+
+        # ---------- Keybindings ----------
+        binds = {
+          "Mod+Space".spawn = launcher "apps";
+          "Mod+Alt+Space".spawn = launcher "files";
+          "Mod+Shift+V".spawn = launcher "clipboard";
+          "Mod+Period".spawn = launcher "emoji";
 
           "Mod+Return".spawn = config.terminal;
 
@@ -93,76 +112,124 @@ in {
           "Mod+Shift+9".move-column-to-workspace = 9;
           "Mod+Shift+0".move-column-to-workspace = 10;
 
-	        "Mod+Tab".toggle-overview = _: { };
+          "Mod+Tab".toggle-overview = _: { };
 
-          "XF86AudioRaiseVolume".spawn-sh = "wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+";
-          "XF86AudioLowerVolume".spawn-sh = "wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-";
+          # Audio
+          "XF86AudioRaiseVolume".spawn-sh =
+            "wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+";
 
+          "XF86AudioLowerVolume".spawn-sh =
+            "wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-";
+
+          # Resize
           "Mod+Ctrl+H".set-column-width = "-5%";
           "Mod+Ctrl+L".set-column-width = "+5%";
           "Mod+Ctrl+J".set-window-height = "-5%";
           "Mod+Ctrl+K".set-window-height = "+5%";
 
+          # Mouse navigation
           "Mod+WheelScrollDown".focus-column-left = _: { };
           "Mod+WheelScrollUp".focus-column-right = _: { };
           "Mod+Ctrl+WheelScrollDown".focus-workspace-down = _: { };
           "Mod+Ctrl+WheelScrollUp".focus-workspace-up = _: { };
 
-            #[ "${pkgs.lib.getExe' pkgs.wl-clipboard "wl-paste"}" ];
-	        "Print".screenshot = _: { };                  # interactive region select           
-	        "Ctrl+Print".screenshot-screen = _: { };      # whole focused monitor
-	        "Alt+Print".screenshot-window = _: { };       # focused window
+          # Screenshots
+          "Print".screenshot = _: { };
+          "Ctrl+Print".screenshot-screen = _: { };
+          "Alt+Print".screenshot-window = _: { };
         };
 
-    layout = {
-       gaps = 4;
-       focus-ring = {
-         width = 1;
-         active-color = "#${self.themeNoHash.base0C}";
+        # ---------- Obsidian layout ----------
+        layout = {
+          background-color = "transparent";
+          gaps = 4;
+          always-center-single-column = true;
+
+          focus-ring = {
+            width = 1;
+
+            # Active window: muted silver
+            active-color = self.theme.base05;
+
+            # Inactive monitor: dark graphite
+            inactive-color = self.theme.base02;
+
+            # Urgent window: near-white
+            urgent-color = self.theme.base07;
+          };
         };
-       always-center-single-column = true;
-    };
-    window-rules = [
-       { opacity = 0.85; }
-    {
-       matches = [ { is-focused = true; } ];
-       opacity = 1.0;
-       shadow = {
-         on = _: { };
-       };
-    }
-#    {
-#       matches = [
-#        { app-id = "^org.pulseaudio.pavucontrol$"; }
-#        { app-id = "blueman-manager"; }
-#      ];
-#      open-floating = true;
-#      default-column-width = { fixed = 600; };
-#      default-window-height = { fixed = 400; };
-#    }
-   ];
-    cursor = {
-  	  xcursor-theme = "Bibata-Modern-Classic";
-      xcursor-size = 20;
-    };
 
-    xwayland-satellite.path = lib.getExe config.pkgs.xwayland-satellite;
+        # ---------- Window rules ----------
+        window-rules = [
+          {
+            # Preserve inactive transparency
+            opacity = 1.0;
+            background-effect.blur = false;
+          }
 
+          {
+            matches = [
+              { is-focused = true; }
+            ];
+
+            shadow = {
+              on = _: { };
+
+              color = "${self.theme.base00}80";
+
+              softness = 20;
+              spread = 2;
+            };
+          }
+
+          {
+            matches = [
+              { app-id = "^kitty$"; }
+            ];
+
+            draw-border-with-background = false;
+
+            background-effect = {
+              blur = true;
+              xray = true;
+            };
+          }
+        ];
+
+        blur = {
+            passes = 2;
+            offset = 3.0;
+            noise = 0.02;
+            saturation = 0.5;
+        };
+
+        # ---------- Cursor ----------
+        cursor = {
+          xcursor-theme = "Bibata-Modern-Classic";
+          xcursor-size = 20;
+        };
+
+        # ---------- XWayland ----------
+        xwayland-satellite.path =
+          lib.getExe config.pkgs.xwayland-satellite;
+
+        # ---------- Startup ----------
         spawn-at-startup = [
           quickshellExe
+
           (lib.getExe (
             config.pkgs.writeShellScriptBin "wallpaper"
-            "${lib.getExe config.pkgs.swaybg} -i ${self.wallpaper} -m fill"
+              "${lib.getExe config.pkgs.swaybg} -i ${self.wallpaper} -m fill"
           ))
         ];
       };
     };
   };
 
-  perSystem = {pkgs, ...}: {
+  perSystem = { pkgs, ... }: {
     packages.niri = inputs.wrappers.wrappers.niri.wrap {
       inherit pkgs;
-      imports = [self.wrappersModules.niri];
+      imports = [ self.wrappersModules.niri ];
     };
   };
 }

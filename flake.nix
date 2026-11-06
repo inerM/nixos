@@ -10,13 +10,19 @@
     preservation.url = "github:nix-community/preservation";
 
     quickshell-config = {                                                 # linked to my repo
-    	url = "git+https://codeberg.org/Koesinn/quickshell";     
+    	url = "git+https://codeberg.org/inerM/quickshell";     
 	    flake = false;
     };
-     nautilus-my-computer = {
-         url = "github:yannmasoch/nautilus-my-computer?dir=packaging/nix";
-         inputs.nixpkgs.follows = "nixpkgs";
-     };
+    nautilus-my-computer = {
+      url = "github:yannmasoch/nautilus-my-computer?dir=packaging/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs: let

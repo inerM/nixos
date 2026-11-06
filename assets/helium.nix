@@ -57,7 +57,7 @@
       ];
 
       # optional qt theming shims, i don't ship qt
-      # autoPatchelfIgnoreMissingDeps = ["libQt5*" "libQt6*"];
+      autoPatchelfIgnoreMissingDeps = ["libQt5*" "libQt6*"];
 
       dontStrip = true; # ~300MB binary, stripping is slow for nothing
       dontConfigure = true;
