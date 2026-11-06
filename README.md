@@ -3,7 +3,7 @@
 > A simple, dendritic, ephemeral root(impermanence) NixOS configuration built with flakes.
 
 ---
-![Looks](screenshots/scrt1.png)
+![Looks](screenshots/scrt2.png)
 
 ## Contents
 
