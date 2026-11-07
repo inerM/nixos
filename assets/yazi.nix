@@ -2,11 +2,13 @@
   flake.nixosModules.app-yazi = {pkgs, ...}: let
     t = self.theme;
     red = t.base08; # shared muted error accent
-    # Soft graphite highlight with readable light-gray text.
-    selected = {fg = "#c4c4c4"; bg = "#353535"; bold = false;};
+
+    folder = "#8b9da3";
+
+    selected = {fg = t.base05; bg = t.base02; bold = false;};
+
     ic = hex: builtins.fromJSON ''"\u${hex}"''; # nerd-font glyph from codepoint
 
-    # ---------- code preview colours (yazi uses a .tmTheme for this) ----------
     rule = name: scope: fg: style: ''
       <dict>
         <key>name</key><string>${name}</string>
@@ -58,26 +60,24 @@
       </plist>
     '';
 
-    # ---------- yazi theme.toml ----------
     theme = {
       mgr = {
         cwd = {fg = t.base04;};
         find_keyword = {fg = t.base05; bold = true; underline = true;};
         find_position = {fg = t.base05; bold = true;};
         symlink_target = {fg = t.base04; italic = true;};
-        marker_copied = {fg = t.base05; bg = t.base05;};
-        marker_cut = {fg = t.base03; bg = t.base03;};
+        marker_copied = {fg = t.base0B; bg = t.base0B;};
+        marker_cut = {fg = t.base08; bg = t.base08;};
         marker_marked = {fg = t.base04; bg = t.base04;};
         marker_selected = {fg = t.base04; bg = t.base04;};
-        count_copied = {fg = t.base00; bg = t.base05;};
-        count_cut = {fg = t.base00; bg = t.base04;};
+        count_copied = {fg = t.base00; bg = t.base0B;};
+        count_cut = {fg = t.base00; bg = t.base08;};
         count_selected = selected;
         border_symbol = "│";
         border_style = {fg = t.base03;};
         syntect_theme = "${monoTmTheme}";
       };
 
-      # Current Yazi uses indicator styles for the hovered row.
       indicator = {
         parent = selected;
         current = selected;
@@ -86,33 +86,33 @@
 
       tabs = {
         active = selected;
-        inactive = {fg = t.base04; bg = t.base02;};
+        inactive = {fg = t.base04; bg = t.base01;};
       };
 
       mode = {
         normal_main = selected;
-        normal_alt = {fg = t.base06; bg = t.base02;};
+        normal_alt = {fg = t.base05; bg = t.base01;};
         select_main = selected;
-        select_alt = {fg = t.base05; bg = t.base02;};
+        select_alt = {fg = t.base05; bg = t.base01;};
         unset_main = {fg = t.base00; bg = t.base04; bold = true;};
-        unset_alt = {fg = t.base04; bg = t.base02;};
+        unset_alt = {fg = t.base04; bg = t.base01;};
       };
 
       status = {
         perm_sep = {fg = t.base03;};
-        perm_type = {fg = t.base06;};
+        perm_type = {fg = t.base05;};
         perm_read = {fg = t.base05;};
         perm_write = {fg = t.base05; bold = true;};
         perm_exec = {fg = t.base04;};
         progress_label = {fg = t.base05; bold = true;};
-        progress_normal = {fg = t.base06; bg = t.base02;};
+        progress_normal = {fg = t.base05; bg = t.base02;};
         progress_error = {fg = red; bg = t.base02;};
       };
 
       which = {
         cols = 3;
         mask = {bg = t.base01;};
-        cand = {fg = t.base06;};
+        cand = {fg = t.base05;};
         rest = {fg = t.base04;};
         desc = {fg = t.base04;};
         separator = "  ";
@@ -120,41 +120,41 @@
       };
 
       confirm = {
-        border = {fg = t.base04;};
+        border = {fg = t.base03;};
         title = {fg = t.base05; bold = true;};
         content = {fg = t.base05;};
         list = {fg = t.base05;};
         btn_yes = selected;
-        btn_no = {fg = t.base05;};
+        btn_no = {fg = t.base04;};
       };
 
       notify = {
-        title_info = {fg = t.base06;};
+        title_info = {fg = t.base05;};
         title_warn = {fg = t.base09; bold = true;};
         title_error = {fg = red; bold = true;};
       };
 
       input = {
-        border = {fg = t.base04;};
+        border = {fg = t.base03;};
         title = {fg = t.base05;};
-        value = {fg = t.base06;};
+        value = {fg = t.base05;};
         selected = {bg = t.base02;};
       };
 
       pick = {
-        border = {fg = t.base04;};
+        border = {fg = t.base03;};
         active = selected;
-        inactive = {fg = t.base05;};
+        inactive = {fg = t.base04;};
       };
 
       cmp = {
-        border = {fg = t.base04;};
+        border = {fg = t.base03;};
         active = selected;
-        inactive = {fg = t.base05;};
+        inactive = {fg = t.base04;};
       };
 
       tasks = {
-        border = {fg = t.base04;};
+        border = {fg = t.base03;};
         title = {fg = t.base05;};
         hovered = selected;
       };
@@ -167,11 +167,9 @@
         footer = {fg = t.base04;};
       };
 
-      # Mostly neutral file list, with muted hints for file types
       filetype.rules = [
         {url = "*"; is = "orphan"; fg = red;}
-        # Match directories before executable files; directories can be executable too.
-        {url = "*/"; fg = t.base05; bold = false;}
+        {url = "*/"; fg = folder; bold = false;}
         {url = "*"; is = "exec"; fg = t.base05; bold = false;}
         {mime = "image/*"; fg = t.base0C;}
         {mime = "{audio,video}/*"; fg = t.base0A;}
@@ -180,10 +178,9 @@
         {url = "*"; fg = t.base05;}
       ];
 
-      # icons: same shape idea as the default, but all grey
       icon.prepend_globs = [
         {url = ".git/"; text = ic "e702"; fg = t.base04;}
-        {url = "*/"; text = ic "e5ff"; fg = t.base05;}
+        {url = "*/"; text = ic "e5ff"; fg = folder;}
         {url = "*.nix"; text = ic "f313"; fg = t.base04;}
         {url = "*.md"; text = ic "e73e"; fg = t.base04;}
         {url = "*.lock"; text = ic "f023"; fg = t.base04;}

@@ -8,15 +8,14 @@
     pkgs,
     ...
   }: let
-    # hex colours without "#", which is what fish's set_color expects
     t = self.themeNoHash;
-    red = "#e72116"; # shared muted error accent
+    red = t.base08;
 
     fishConf =
       pkgs.writeText "fishy-fishy"
       # fish
       ''
-        # ---------- syntax highlighting ----------
+        # syntax highlighting
         set -g fish_color_normal       ${t.base06}
         set -g fish_color_command      ${t.base0D} --bold
         set -g fish_color_keyword      ${t.base0E} --bold
@@ -30,26 +29,26 @@
         set -g fish_color_comment      ${t.comment}
         set -g fish_color_error        ${red}
         set -g fish_color_valid_path   --underline
-        set -g fish_color_autosuggestion ${t.base04}
+        set -g fish_color_autosuggestion ${t.base03}
         set -g fish_color_cancel       ${t.base03}
         set -g fish_color_search_match --background=${t.base02}
-        set -g fish_color_selection    ${t.base00} --background=${t.base06}
+        set -g fish_color_selection    ${t.base00} --background=${t.base05}
         set -g fish_color_cwd          ${t.base04}
         set -g fish_color_user         ${t.base05}
         set -g fish_color_host         ${t.base05}
         set -g fish_color_host_remote  ${t.base04}
         set -g fish_color_status       ${red}
 
-        # ---------- completion pager ----------
+        # completion pager 
         set -g fish_pager_color_progress               ${t.base03}
-        set -g fish_pager_color_prefix                 ${t.base07} --bold --underline
+        set -g fish_pager_color_prefix                 ${t.base06} --bold --underline
         set -g fish_pager_color_completion             ${t.base05}
         set -g fish_pager_color_description            ${t.comment}
         set -g fish_pager_color_selected_background    --background=${t.base02}
-        set -g fish_pager_color_selected_completion    ${t.base07}
+        set -g fish_pager_color_selected_completion    ${t.base06}
         set -g fish_pager_color_selected_description   ${t.base04}
 
-        # ---------- prompt ----------
+        # prompt
         function fish_prompt
           set -l last_status $status
 
@@ -59,7 +58,7 @@
           echo (prompt_pwd)
 
           if test $last_status -eq 0
-            set_color ${t.base07}
+            set_color ${t.base06}
           else
             set_color ${red}        # red if the last command failed
           end

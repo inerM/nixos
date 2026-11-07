@@ -28,48 +28,37 @@
       });
 
       settings = {
-        # General
         enable_audio_bell = "no";
         background_opacity = 0.85;
 
-        # Fonts
         font_size = 10;
         font_family = "IBM Plex Mono";
 
-        # Shell
         allow_remote_control = "yes";
         shell_integration = "enabled";
 
-        # Cursor
         cursor = self.theme.base06;
         cursor_text_color = self.theme.base00;
         cursor_shape = "block";
 
-        # Cursor trail
         cursor_trail = 10;
         cursor_trail_color = self.theme.base03;
         cursor_trail_decay = "0.2 0.5";
 
-        # Window
         window_padding_width = 12;
         confirm_os_window_close = 0;
 
-        # Obsidian background / foreground
         background = self.theme.base00;
         foreground = self.theme.base06;
 
-        # High contrast selection
-        selection_foreground = self.theme.base00;
-        selection_background = self.theme.base07;
+        selection_foreground = self.theme.base06;
+        selection_background = self.theme.base02;
 
-        # Tabs
-        active_tab_foreground = self.theme.base00;
-        active_tab_background = self.theme.base06;
-
+        active_tab_foreground = self.theme.base05;
+        active_tab_background = self.theme.base02;
         inactive_tab_foreground = self.theme.base04;
         inactive_tab_background = self.theme.base01;
 
-        # Muted ANSI colors for programs using the terminal palette
         color0 = self.theme.base00;
         color8 = self.theme.comment;
 

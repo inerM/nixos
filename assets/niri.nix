@@ -60,7 +60,6 @@
           };
         };
 
-        # ---------- Keybindings ----------
         binds = {
           "Mod+Space".spawn = launcher "apps";
           "Mod+Alt+Space".spawn = launcher "files";
@@ -139,7 +138,6 @@
           "Alt+Print".screenshot-window = _: { };
         };
 
-        # ---------- Obsidian layout ----------
         layout = {
           background-color = "transparent";
           gaps = 4;
@@ -148,21 +146,16 @@
           focus-ring = {
             width = 1;
 
-            # Active window: muted silver
             active-color = self.theme.base05;
 
-            # Inactive monitor: dark graphite
             inactive-color = self.theme.base02;
 
-            # Urgent window: near-white
             urgent-color = self.theme.base07;
           };
         };
 
-        # ---------- Window rules ----------
         window-rules = [
           {
-            # Preserve inactive transparency
             opacity = 1.0;
             background-effect.blur = false;
           }
@@ -203,17 +196,14 @@
             saturation = 0.5;
         };
 
-        # ---------- Cursor ----------
         cursor = {
           xcursor-theme = "Bibata-Modern-Classic";
           xcursor-size = 20;
         };
 
-        # ---------- XWayland ----------
         xwayland-satellite.path =
           lib.getExe config.pkgs.xwayland-satellite;
 
-        # ---------- Startup ----------
         spawn-at-startup = [
           quickshellExe
 

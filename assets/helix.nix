@@ -27,7 +27,6 @@
 
       themes.mono = {
         palette = {
-          # neutral ramp
           bg   = self.theme.base00;
           bg1  = self.theme.base01;
           bg2  = self.theme.base02;
@@ -37,7 +36,6 @@
           fg   = self.theme.base06;
           fg0  = self.theme.base07;
 
-          # muted syntax accents, independent of neutral UI colors
           emph = self.theme.base07;
           num  = self.theme.base09;
           type = self.theme.base0A;
@@ -47,13 +45,11 @@
           kw   = self.theme.base0E;
           dim  = self.theme.base0F;
           red  = self.theme.base08;
-          wr = "#e72116";
+          wr   = self.theme.base08; # errors, same muted red as the rest of the theme
         };
 
-        # ---------- comments ----------
         "comment" = "gray";
 
-        # ---------- keywords ----------
         "keyword" = {fg = "kw"; modifiers = ["bold"];};
         "keyword.control" = {fg = "kw"; modifiers = ["bold"];};
         "keyword.control.import" = {fg = "spec"; modifiers = ["bold"];};
@@ -62,13 +58,11 @@
         "keyword.operator" = "fg4";
         "label" = "spec";
 
-        # ---------- functions ----------
         "function" = {fg = "fn"; modifiers = ["bold"];};
         "function.builtin" = {fg = "fn"; modifiers = ["bold"];};
         "function.method" = {fg = "fn"; modifiers = ["bold"];};
         "function.macro" = {fg = "fn"; modifiers = ["italic"];};
 
-        # ---------- types ----------
         "type" = {fg = "type"; modifiers = ["italic"];};
         "type.builtin" = {fg = "type"; modifiers = ["italic"];};
         "type.parameter" = {fg = "type"; modifiers = ["italic"];};

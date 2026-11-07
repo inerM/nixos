@@ -1,27 +1,31 @@
 let
   theme = {
-    # Neutral ramp: black -> white (pure greys, no tint)
-    base00 = "#111111"; # bg
-    base01 = "#1c1c1c"; # darker surface / status bars
-    base02 = "#2b2b2b"; # selection bg
-    base03 = "#5c5c5c"; # dim UI / invisibles
+    base00 = "#121212"; # bg
+    base01 = "#212121"; # lighter surface / status bars
+    base02 = "#2c2c2c"; # selection bg (mono "selection" is darker than bg, so unusable here)
+    base03 = "#5a5a5a"; # dim UI / invisibles (mono muted)
     base04 = "#8a8a8a"; # dark fg (status text)
-    base05 = "#b3b3b3"; # default text
-    base06 = "#d9d9d9"; # fg
-    base07 = "#f5f5f5"; # light fg
+    base05 = "#adadad"; # default text (mono dark_foreground)
+    base06 = "#e0e0e0"; # fg (mono foreground)
+    base07 = "#fafafa"; # light fg (mono bright_foreground)
 
-    # Muted accents: keep UI surfaces neutral, use hue for syntax meaning.
-    base08 = "#c58f8f"; # dusty rose: errors / deletions
-    base09 = "#c6ab86"; # sand: numbers / constants
-    base0A = "#c2b99a"; # warm stone: types
-    base0B = "#a5b49a"; # sage: strings / additions
-    base0C = "#99b7b5"; # desaturated teal: escapes / options
-    base0D = "#9eafc4"; # dusty blue: functions / attributes
-    base0E = "#b2a0bd"; # muted mauve: keywords / booleans
-    base0F = "#969696"; # readable neutral punctuation
+    base08 = "#d9656a"; # red (from #e05f64): errors / deletions
+    base09 = "#d9ad6d"; # sand (from #e0af68): numbers / constants
+    base0A = "#bca686"; # warm stone (from #e0af68, softer mix): types
+    base0B = "#8dd988"; # green (from #8be086): strings / additions
+    base0C = "#57a3a5"; # teal (from #4fa3a6): escapes / options
+    base0D = "#7ac3dc"; # blue (from #76c7e3): functions / attributes
+    base0E = "#9186b6"; # mauve (from #9083b9): keywords / booleans
+    base0F = "#949494"; # readable neutral punctuation (mono orange)
 
-    # Separate from base03 so existing neutral UI and GTK stay unchanged.
-    comment = "#929292"; # readable comments on an older display
+    comment = "#8a8a8a"; # readable comments, kept neutral
+
+    accent = "#626262"; # neutral accent (mono)
+    accentTint = "#7ac3dc"; # optional cool accent for focus / active states
+    borderActive = "#4fa3a6"; # teal border (colour palette)
+    borderInactive = "#2c2c2c";
+    bgDark = "#0d0d0d"; # mono dark_background
+    bgDarker = "#080808"; # mono darker_background
   };
 
   stripHash = str:

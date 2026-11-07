@@ -17,12 +17,13 @@
 - [Theming](#theming)
 - [QuickShell](#quickshell)
 - [Holy Thanks](#holy-thanks)
+- [spNotes](#spnotes)
 
 ---
 
 ## Overview
 
-This configuration is made to be **as minimal as possible**—focusing on reproducibility, and zero unnecessary bloat. It provides a wrapped, modular desktop environment without overhead. It also includes **optional** impermanence (root wiped on every boot, btrfs based). It is off by default for the `potato` host and can be switched on with one uncomment - it works only on `btrfs` filesystem (for now)- [Read](#impermanence)
+This configuration is made to be **as minimal as possible**—focusing on reproducibility, and zero unnecessary bloat. It provides a wrapped, modular desktop environment without overhead. It also includes **optional** impermanence (root wiped on every boot,tmpfs). It is off by default for the `potato` host and can be switched on with one uncomment. - [Read](#impermanence)
 
 ---
 
@@ -45,17 +46,17 @@ Necessary window manager shortcuts: discover lot more :)
 
 ## Installation
 >[!IMPORTANT]
->Impermanence is **optional**. If your disk is not btrfs, or you just don't want it, skip step 1 and the config works on any normal filesystem.
->Repo clone is required. Remote build is not fully prepared yet. But remote launch app via `nix run "git+https://codeberg.org/inerM/nixos.git#Appname"` is supported for the wrapped apps.
+>Impermanence is **optional**. if you dont want this skip step 1 and the config works on any normal filesystem.
+>for password u need to edit the praimaryuser.nix, comment out the sops, hassedpass aspects.
 ### 1. Choose: with or without impermanence
-- **With impermanence** (btrfs): refer to [Impermanence](#impermanence)
+- **With impermanence** (tmpfs): refer to [Impermanence](#impermanence)
   ```nix
     		]
   		++ (with self.nixosModules; [ 
 	   # impermanence  <------ uncomment this.
 
   ```
-- **Without impermanence**(nay filesystem): skip step 1.
+- **Without impermanence**: skip step 1.
 
 ### 2. Clone the repository
 ```bash
@@ -102,52 +103,25 @@ will include later (its unnecessary anyway for a dendritic setup )
 ---
 
 ## Impermanence
+switched to lot simpler tmpfs root. to use it you must have to have only one partion where whole `/`resides.
+the `/boot` are mounted at `/persist` during boot so that it wont crash into emergency mode.
+>[!note]
+>during installation you might encounter grub not finding kernel in legacy BIOS devices. You need to find workaround to fix that.
 
-You dont want it, skip it. To use it your disk must be in `btrfs` having `/persist`, `/`, `/nix` as subvol in a your main partition. Root (`/`) is wiped on every boot. Only what is declared as persistent survives. This ephemeral root setup used btrfs wipe instead of tmpfs due to some personal reasons (im having RAM crisis,lol).
-
-> [!NOTE]
-> Optional. To turn it off, stop bothering this section (see [Installation](#installation)). Everything below applies only when it is enabled.
-
-### How it works
-
-`fs.nix` mounts three btrfs subvolumes from one partition (label `persist`):
-
+## structure
 ```text
-persist partition (btrfs)
-├── root     -> /         deleted and recreated empty on every boot
-├── persist  -> /persist  kept (user data and selected system state)
-└── nix      -> /nix      kept (the Nix store)
+.
+└── /    <---- except the /persist whole section is going to wipe on boot/
+    ├── /bin
+    ├── /boot
+    ├── /etc
+    ├── /persist/
+    │   ├── /boot   <----- the /boot is mounted here so it wont wipe
+    │   └── /nix    <------ same for it. you can preserve more . see the preservance.nix
+    ├── /var
+    └── /nix
 ```
-
-- A systemd initrd service (`rollback-root`, in `fs.nix`) deletes the `root` subvolume and creates a fresh one before root is mounted.
-- `preservation.nix` ([nix-community/preservation](https://github.com/nix-community/preservation)) bind-mounts the chosen directories and files from `/persist` back into place.
-- `persist` and `nix` are bros of `root`, not childs, so the wipe never touches them.
-
-### Requirements
-
-| Needed | Details |
-| :--- | :--- |
-| Partition | One btrfs partition labeled `persist` with subvolumes `root`, `persist`, `nix` |
-| /boot | Separate FAT32 partition labeled `BOOT` (ESP on UEFI, /boot on BIOS) |
-| Swap | Optional, partition labeled `swap` (set `my.fs.swapDevice = null;` for none) |
-| Initrd | `boot.initrd.systemd.enable = true` (already set in `preservation.nix`) |
-| Password | Must be declared (`hashedPasswordFile` or `hashedPassword`), because `passwd` changes are wiped |
-
-### Why btrfs instead of tmpfs
-
-| | tmpfs root | btrfs wipe-on-boot |
-| :--- | :--- | :--- |
-| Root lives in | RAM | Disk |
-| Size limit | Fixed, eats RAM | Free disk space |
-| Big temp files (builds, caches) | Can fill RAM and cause OOM | Fine, uses disk |
-| Setup | Simplest | Needs rollback script and subvolumes |
-
-tmpfs is lot simpler if you have plenty of RAM. (im having RAM crisis, bruh!)
-
-### Disk setup (from a live ISO)
-> [!WARNING]
-> This process required live usb iso and will nuke your drive. So only try if moderate or above, [Here](https://btrfs.readthedocs.io/en/latest/btrfs-subvolume.html).
- make those partition and subvol acoording to the ![Requirements](#requirements) and clone the repo to the clone the repo into `/mnt/persist/home/<user>/.nixos`, then install:
+## Install
 ```bash
 nixos-install --root /mnt --no-root-passwd --impure --flake /mnt/persist/home/<user>/.nixos#<hostname>
 ```
@@ -205,3 +179,8 @@ for Detailed info read [Quickshell-config](https://codeberg.org/inerM/quickshell
 Special thanks to:
 - [Vimjoyer](https://github.com/vimjoyer/nixconf) — for the foundational dendritic pattern and wrapped programmes, specially neovim.
 - [A Dumb Human](https://git.voidarc.co.uk/voidarc/quickshell) — for quickshell.
+
+## SpNotes
+Reguarding AI , i did use ai for debugging, code: cleanup, commenting etc usecaes. `the config is not made by Ai.` I am not against using ai but copy-pasting from LLM kills the purpose of open community.
+In the config you migh encounter comments in the code files which are for repo understanding pupose, in some minute areas doing maually will take ages. thats where i used ai to code cleanup and inserting understandable commets.
+thanks..
