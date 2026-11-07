@@ -1,31 +1,45 @@
 let
+  # Swaystation’s charcoal terminal background and Gruvbox Material accents.
   theme = {
-    base00 = "#121212"; # bg
-    base01 = "#212121"; # lighter surface / status bars
-    base02 = "#2c2c2c"; # selection bg (mono "selection" is darker than bg, so unusable here)
-    base03 = "#5a5a5a"; # dim UI / invisibles (mono muted)
-    base04 = "#8a8a8a"; # dark fg (status text)
-    base05 = "#adadad"; # default text (mono dark_foreground)
-    base06 = "#e0e0e0"; # fg (mono foreground)
-    base07 = "#fafafa"; # light fg (mono bright_foreground)
+    # Charcoal surfaces and warm Gruvbox text
+    base00 = "#222222"; # Swaystation Foot background
+    base01 = "#282828"; # bg1 / status bars
+    base02 = "#383838"; # selection / raised surfaces
+    base03 = "#7c6f64"; # grey0 / dim UI, invisibles
+    base04 = "#928374"; # grey1 / status text
+    base05 = "#d4be98"; # fg0 / default text
+    base06 = "#ebdbb2"; # normal editor text
+    base07 = "#fff4d2"; # Swaystation Foot foreground
 
-    base08 = "#d9656a"; # red (from #e05f64): errors / deletions
-    base09 = "#d9ad6d"; # sand (from #e0af68): numbers / constants
-    base0A = "#bca686"; # warm stone (from #e0af68, softer mix): types
-    base0B = "#8dd988"; # green (from #8be086): strings / additions
-    base0C = "#57a3a5"; # teal (from #4fa3a6): escapes / options
-    base0D = "#7ac3dc"; # blue (from #76c7e3): functions / attributes
-    base0E = "#9186b6"; # mauve (from #9083b9): keywords / booleans
-    base0F = "#949494"; # readable neutral punctuation (mono orange)
+    # Accents
+    base08 = "#ea6962"; # red: keywords / errors
+    base09 = "#e78a4e"; # orange: operators / warnings
+    base0A = "#d8a657"; # yellow: types
+    base0B = "#a9b665"; # green: functions / additions
+    base0C = "#89b482"; # aqua: strings / options
+    base0D = "#83a598"; # blue: members / links
+    base0E = "#d3869b"; # purple: annotations / literals
+    base0F = "#a89984"; # grey2: punctuation
 
-    comment = "#8a8a8a"; # readable comments, kept neutral
+    comment = "#928374"; # grey1
 
-    accent = "#626262"; # neutral accent (mono)
-    accentTint = "#7ac3dc"; # optional cool accent for focus / active states
-    borderActive = "#4fa3a6"; # teal border (colour palette)
-    borderInactive = "#2c2c2c";
-    bgDark = "#0d0d0d"; # mono dark_background
-    bgDarker = "#080808"; # mono darker_background
+    # Extras
+    accent = "#d8a657";
+    accentTint = "#83a598";
+    borderActive = "#d8a657";
+    borderInactive = "#383838";
+    bgDark = "#181818";
+    bgDarker = "#141414";
+
+    # Subtle tinted backgrounds (diffs, visual selections)
+    bgDiffRed = "#3c1f1e";
+    bgDiffGreen = "#32361a";
+    bgDiffBlue = "#0d3138";
+    bgVisualRed = "#442e2d";
+    bgVisualYellow = "#473c29";
+    bgVisualGreen = "#333e34";
+    bgVisualBlue = "#2e3b3b";
+    bgVisualPurple = "#3c333b";
   };
 
   stripHash = str:

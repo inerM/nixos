@@ -3,7 +3,7 @@
     t = self.theme;
     red = t.base08; # shared muted error accent
 
-    folder = "#8b9da3";
+    folder = t.base0A;
 
     selected = {fg = t.base05; bg = t.base02; bold = false;};
 
@@ -40,19 +40,19 @@
             </dict>
           </dict>
           ${rule "comment" "comment" t.comment ""}
-          ${rule "string" "string" t.base0B ""}
-          ${rule "regex / escape" "string.regexp, constant.character.escape" t.base0C ""}
-          ${rule "constant" "constant, constant.numeric" t.base09 ""}
-          ${rule "boolean / builtin" "constant.language" t.base0E "bold"}
-          ${rule "keyword" "keyword, storage" t.base0E "bold"}
-          ${rule "operator" "keyword.operator" t.base04 ""}
-          ${rule "function" "entity.name.function, support.function, meta.function-call" t.base0D "bold"}
+          ${rule "string" "string" t.base0C ""}
+          ${rule "regex / escape" "string.regexp, constant.character.escape" t.base0B ""}
+          ${rule "constant" "constant, constant.numeric, constant.language" t.base0E ""}
+          ${rule "keyword" "keyword, storage" t.base08 "bold"}
+          ${rule "operator" "keyword.operator" t.base09 ""}
+          ${rule "function" "entity.name.function, support.function, variable.function" t.base0B "bold"}
           ${rule "type" "entity.name.type, entity.name.class, support.type, support.class, storage.type" t.base0A "italic"}
           ${rule "variable" "variable" t.base06 ""}
           ${rule "parameter" "variable.parameter" t.base05 "italic"}
+          ${rule "property" "variable.other.member, variable.other.property, support.type.property-name, entity.name.tag.yaml, meta.mapping.key string, meta.object-literal.key" t.base0D ""}
           ${rule "punctuation" "punctuation" t.base0F ""}
-          ${rule "tag" "entity.name.tag" t.base0E "bold"}
-          ${rule "attribute" "entity.other.attribute-name" t.base0D ""}
+          ${rule "tag" "entity.name.tag" t.base09 "bold"}
+          ${rule "annotation" "entity.other.attribute-name, storage.type.annotation" t.base0E ""}
           ${rule "heading" "markup.heading, entity.name.section" t.base07 "bold"}
           ${rule "invalid" "invalid" red ""}
         </array>

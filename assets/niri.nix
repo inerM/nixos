@@ -153,6 +153,7 @@
             urgent-color = self.theme.base07;
           };
         };
+        overview.workspace-shadow.off = _: { };
 
         window-rules = [
           {
