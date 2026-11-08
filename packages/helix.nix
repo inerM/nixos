@@ -4,13 +4,19 @@
   ...
 }: {
   flake.wrappersModules.helix = {
+    config,
     ...
   }: {
     config = {
+      # clipboard provider: without wl-copy/wl-paste on helix's PATH, yanking to
+      # the system clipboard and mouse copy/paste (primary selection) do nothing
+      runtimePkgs = [config.pkgs.wl-clipboard];
+
       settings = {
         theme = "mono";
 
         editor = {
+          mouse = true;
           true-color = true;
           color-modes = true;
           cursorline = true;
@@ -43,32 +49,35 @@
           aqua = self.theme.base0C;
           blue = self.theme.base0D;
           purple = self.theme.base0E;
+          ember = self.theme.ember;
+          r = "#ff3333";
         };
 
-        "comment" = "gray";
+        "comment" = {fg = "gray"; modifiers = ["italic"];};
 
-        "keyword" = {fg = "red"; modifiers = ["bold"];};
+        "keyword" = {fg = "fg0"; modifiers = ["bold"];};
         "keyword.directive" = "purple";
-        "keyword.operator" = "orange";
+        "keyword.operator" = "fg4";
         "label" = "yellow";
 
-        "function" = {fg = "green"; modifiers = ["bold"];};
-        "function.macro" = {fg = "green"; modifiers = ["bold" "italic"];};
+        "function" = {fg = "fg"; modifiers = ["bold"];};
+        "function.macro" = {fg = "fg"; modifiers = ["bold" "italic"];};
 
         "type" = {fg = "yellow"; modifiers = ["italic"];};
-        "constructor" = {fg = "green"; modifiers = ["bold"];};
+        "constructor" = {fg = "fg"; modifiers = ["bold"];};
         "namespace" = {fg = "yellow"; modifiers = ["italic"];};
-        "attribute" = "purple";
+        "attribute" = {fg = "ember"; modifiers = ["italic"];};
 
         "variable" = "fg";
         "variable.builtin" = {fg = "purple"; modifiers = ["italic"];};
         "variable.parameter" = {fg = "fg3"; modifiers = ["italic"];};
         "variable.other.member" = "blue";
 
-        "constant" = "purple";
+        "constant" = "fg3";
+        "constant.numeric" = "ember";
         "constant.builtin" = {fg = "purple"; modifiers = ["italic"];};
         "constant.character" = "aqua";
-        "constant.character.escape" = {fg = "green"; modifiers = ["bold"];};
+        "constant.character.escape" = {fg = "fg"; modifiers = ["bold"];};
 
         "string" = "aqua";
         "string.regexp" = "green";
@@ -78,9 +87,9 @@
         "string.special.uri" = {fg = "blue"; modifiers = ["underlined"];};
         "string.special.symbol" = "purple";
 
-        "operator" = "orange";
+        "operator" = "fg4";
         "special" = "yellow";
-        "tag" = {fg = "orange"; modifiers = ["bold"];};
+        "tag" = {fg = "fg4"; modifiers = ["bold"];};
 
         "punctuation" = "dim";
         "punctuation.bracket" = "fg3";
@@ -105,11 +114,11 @@
         "diff.delta" = "orange";
 
         # ---------- diagnostics (distinguished by underline style) ----------
-        "error" = {fg = "red"; modifiers = ["bold"];};
+        "error" = {fg = "r"; modifiers = ["bold"];};
         "warning" = "orange";
         "info" = "blue";
         "hint" = "gray";
-        "diagnostic.error" = {underline = {color = "red"; style = "curl";};};
+        "diagnostic.error" = {underline = {color = "r"; style = "curl";};};
         "diagnostic.warning" = {underline = {color = "orange"; style = "dashed";};};
         "diagnostic.info" = {underline = {color = "blue"; style = "dotted";};};
         "diagnostic.hint" = {underline = {color = "gray"; style = "dotted";};};
@@ -125,16 +134,17 @@
         "ui.cursorline.primary" = {bg = "bg1";};
         "ui.cursor.match" = {fg = "bg"; bg = "yellow"; modifiers = ["bold"];};
 
-        # bright block with dark text so selections pop
-        "ui.selection" = {fg = "bg"; bg = "fg3";};
-        "ui.selection.primary" = {fg = "bg"; bg = "fg";};
+        # Graphite selections keep the text readable without a bright block
+        "ui.selection" = {bg = "bg2";};
+        "ui.selection.primary" = {bg = "bg2";};
         "ui.highlight" = {bg = "bg2";};
 
         "ui.statusline" = {fg = "fg4"; bg = "bg2";};
         "ui.statusline.inactive" = {fg = "gray"; bg = "bg1";};
+        # mode chip: dark text on a light block, so it stands out from the bar
         "ui.statusline.normal" = {fg = "bg"; bg = "fg3"; modifiers = ["bold"];};
         "ui.statusline.insert" = {fg = "bg"; bg = "green"; modifiers = ["bold"];};
-        "ui.statusline.select" = {fg = "bg"; bg = "orange"; modifiers = ["bold"];};
+        "ui.statusline.select" = {fg = "bg"; bg = "ember"; modifiers = ["bold"];};
 
         "ui.bufferline" = {fg = "gray"; bg = "bg1";};
         "ui.bufferline.active" = {fg = "fg0"; bg = "bg2"; modifiers = ["bold"];};
@@ -164,3 +174,4 @@
     }).wrapper;
   };
 }
+

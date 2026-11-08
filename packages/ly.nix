@@ -3,7 +3,7 @@
 let
   # the .dur file wrapped as its own store package
   blackhole-dur = pkgs.runCommand "blackhole-dur" { } ''
-    install -Dm644 ${./graphics/blackhole.dur} $out/share/ly/blackhole.dur
+    install -Dm644 ${../assets/blackhole.dur} $out/share/ly/blackhole.dur
   '';
 in
 {

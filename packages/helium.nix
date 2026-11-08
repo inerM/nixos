@@ -11,7 +11,7 @@
     pname = "helium";
 
     # https://github.com/imputnet/helium-linux/releases
-    version = "0.19.2.1";
+    version = "0.21.1.1";
 
     xlib = n: pkgs.${lib.toLower n} or pkgs.xorg.${n};
 

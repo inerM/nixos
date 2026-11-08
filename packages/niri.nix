@@ -141,6 +141,7 @@
         layout = {
           background-color = "transparent";
           gaps = 4;
+          default-column-width.proportion = 0.65;
           always-center-single-column = true;
 
           focus-ring = {
@@ -188,13 +189,30 @@
               xray = true;
             };
           }
+          {
+            matches = [
+              { app-id = "^termfilechooser$"; }
+            ];
+            open-floating = true;
+            default-column-width.proportion = 0.55;
+            default-window-height.proportion = 0.65;
+            draw-border-with-background = false;
+            background-effect = {
+              blur = true;
+              xray = false;
+              };
+          }
+          {
+            matches = [{ app-id = "^helium$"; }];
+            open-maximized = true;
+          }
         ];
 
         blur = {
             passes = 2;
-            offset = 3.0;
+            offset = 1.0;
             noise = 0.02;
-            saturation = 0.5;
+            saturation = 0;
         };
 
         cursor = {

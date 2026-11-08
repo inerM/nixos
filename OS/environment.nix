@@ -59,7 +59,8 @@
         self'.packages.helix
 	      self'.packages.qalc
 	      self'.packages.jujutsu
-	      self'.packages.jjui	
+	      self'.packages.jjui
+#	      self'.packages.elio	
       ];
       env = {
         EDITOR = lib.getExe self'.packages.helix;

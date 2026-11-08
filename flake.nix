@@ -13,10 +13,19 @@
     	url = "git+https://codeberg.org/inerM/quickshell";     
 	    flake = false;
     };
-    nautilus-my-computer = {
-      url = "github:yannmasoch/nautilus-my-computer?dir=packaging/nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+
+#    elio = {
+#      url = "github:elio-fm/elio";
+#      inputs.nixpkgs.follows = "nixpkgs";
+#    };
+#    rust-overlay = {
+#      url = "github:oxalica/rust-overlay";
+#      inputs.nixpkgs.follows = "nixpkgs";
+#    };
+#    nautilus-my-computer = {
+#      url = "github:yannmasoch/nautilus-my-computer?dir=packaging/nix";
+#      inputs.nixpkgs.follows = "nixpkgs";
+#    };
 
 
     sops-nix = {

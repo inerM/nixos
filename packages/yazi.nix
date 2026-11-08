@@ -1,5 +1,16 @@
-{self, ...}: {
-  flake.nixosModules.app-yazi = {pkgs, ...}: let
+{
+  self,
+  inputs,
+  ...
+}: {
+  # yazi, themed from the system palette, and also the XDG desktop portal
+  # FileChooser (browser "Upload file", "Save as", ...) through
+  # xdg-desktop-portal-termfilechooser.
+  flake.nixosModules.app-yazi = {
+    pkgs,
+    lib,
+    ...
+  }: let
     t = self.theme;
     red = t.base08; # shared muted error accent
 
@@ -79,6 +90,8 @@
       };
 
       indicator = {
+        # square ends on the highlighted row (default is rounded)
+        padding = {open = "▐"; close = "▌";};
         parent = selected;
         current = selected;
         preview = selected;
@@ -99,6 +112,9 @@
       };
 
       status = {
+        # empty separators = square chips (defaults are rounded powerline glyphs)
+        sep_left = {open = ""; close = "";};
+        sep_right = {open = ""; close = "";};
         perm_sep = {fg = t.base03;};
         perm_type = {fg = t.base05;};
         perm_read = {fg = t.base05;};
@@ -191,9 +207,115 @@
         {url = "*"; text = ic "f15b"; fg = t.base04;}
       ];
     };
+
+    yazi = pkgs.yazi.override {settings = {inherit theme;};};
+
+    # ---------------- file chooser portal ----------------
+    tfc = pkgs.xdg-desktop-portal-termfilechooser;
+    dbusName = "org.freedesktop.impl.portal.desktop.termfilechooser";
+
+    # kitty WITHOUT `shell`: the wrapper script appends yazi's arguments after
+    # the terminal command, and the shell path kitty.nix adds would land in the
+    # middle of them.
+    kitty =
+      (inputs.wrappers.wrappers.kitty.apply {
+        inherit pkgs;
+        imports = [self.wrappersModules.kitty];
+      }).wrapper;
+
+    # TERMCMD: gives the window its own app-id so niri can float it
+    termcmd = pkgs.writeShellScript "yazi-chooser-terminal" ''
+      exec ${lib.getExe kitty} --class termfilechooser --title "yazi file chooser" "$@"
+    '';
+
+    # upstream contrib/yazi-wrapper.sh, calling the themed yazi above
+    wrapper = pkgs.writeShellScript "yazi-chooser-wrapper" ''
+      multiple="$1"
+      directory="$2"
+      save="$3"
+      path="$4"
+      out="$5"
+      debug="$6"
+
+      shift 6 # remaining positional args are TERMCMD (backend >= 1.5)
+
+      set -e
+
+      # older backends (nixpkgs ships 1.4.x) pass no terminal command, so
+      # launch our own; without this yazi runs with no terminal and dies
+      if [ "$#" -eq 0 ]; then
+        set -- ${termcmd}
+      fi
+
+      if [ "$debug" = 1 ]; then
+        set -x
+      fi
+
+      cmd="${lib.getExe yazi}"
+
+      if [ "$save" = "1" ]; then
+        set -- "$@" $cmd --chooser-file="$out" "$path"
+      elif [ "$directory" = "1" ]; then
+        set -- "$@" $cmd --chooser-file="$out" --cwd-file="$out"".1" "$path"
+      else
+        set -- "$@" $cmd --chooser-file="$out" "$path"
+      fi
+
+      "$@"
+
+      if [ "$directory" = "1" ]; then
+        if [ ! -s "$out" ] && [ -s "$out"".1" ]; then
+          cat "$out"".1" > "$out"
+          rm "$out"".1"
+        else
+          rm -f "$out"".1"
+        fi
+      fi
+    '';
+
+    configFile = pkgs.writeText "termfilechooser.conf" ''
+      [filechooser]
+      cmd=${wrapper}
+      default_dir=$HOME
+      env=TERMCMD=${termcmd}
+      open_mode=suggested
+      save_mode=suggested
+    '';
+
+    # upstream's D-Bus service plus an explicit -c, so no config file is
+    # needed in $XDG_CONFIG_HOME
+    portal = pkgs.symlinkJoin {
+      name = "yazi-portal";
+      paths = [
+        (pkgs.writeTextDir "share/xdg-desktop-portal/portals/termfilechooser.portal" ''
+          [portal]
+          DBusName=${dbusName}
+          Interfaces=org.freedesktop.impl.portal.FileChooser;
+          UseIn=niri
+        '')
+        (pkgs.writeTextDir "share/dbus-1/services/${dbusName}.service" ''
+          [D-BUS Service]
+          Name=${dbusName}
+          Exec=${tfc}/libexec/xdg-desktop-portal-termfilechooser -c ${configFile}
+        '')
+      ];
+    };
+
+    routing = {
+      default = lib.mkDefault ["gnome" "gtk"];
+      # mkForce: wins over the elio portal module if it is still imported
+      "org.freedesktop.impl.portal.FileChooser" = lib.mkForce ["termfilechooser"];
+    };
   in {
-    environment.systemPackages = [
-      (pkgs.yazi.override {settings = {inherit theme;};})
-    ];
+    environment.systemPackages = [yazi];
+
+    xdg.portal = {
+      enable = lib.mkDefault true;
+      extraPortals = [portal];
+      config = {
+        niri = routing;
+        common = routing;
+      };
+    };
   };
 }
