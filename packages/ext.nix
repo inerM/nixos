@@ -10,7 +10,7 @@
 
     imports = modules;
     services.upower.enable = true;
-    
+    programs.wshowkeys.enable = true;    
     services.power-profiles-daemon.enable = true;
     services.udev.packages = [ pkgs.brightnessctl ];
     services.dbus.enable = true;

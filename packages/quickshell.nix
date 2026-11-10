@@ -5,7 +5,7 @@
       <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
       <fontconfig>
         <include ignore_missing="yes">/etc/fonts/fonts.conf</include>
-        <dir>${pkgs.nerd-fonts.geist-mono}/share/fonts</dir>
+        <dir>${pkgs.nerd-fonts.iosevka}/share/fonts</dir>
       </fontconfig>
     '';
   in {

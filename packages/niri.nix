@@ -209,10 +209,10 @@
         ];
 
         blur = {
-            passes = 2;
-            offset = 1.0;
-            noise = 0.02;
-            saturation = 0;
+            passes = 1;
+            offset = 0;
+            noise = 0.05;
+            saturation = 1.0;
         };
 
         cursor = {

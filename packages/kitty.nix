@@ -21,15 +21,16 @@
 
       env.FONTCONFIG_FILE = toString (config.pkgs.makeFontsConf {
         fontDirectories = [
-          config.pkgs.ibm-plex
+          config.pkgs.ibm-plex # config.pkgs.nerd-fonts.space-mono 
           config.pkgs.nerd-fonts.symbols-only
           config.pkgs.noto-fonts-color-emoji
+          config.pkgs.noto-fonts-cjk-sans 
         ];
       });
 
       settings = {
         enable_audio_bell = "no";
-        background_opacity = 0.85;
+        background_opacity = 0.7;
 
         font_size = 10;
         font_family = "IBM Plex Mono";
@@ -45,10 +46,10 @@
         cursor_trail_color = self.theme.base03;
         cursor_trail_decay = "0.2 0.5";
 
-        window_padding_width = 12;
+        window_padding_width = 14;
         confirm_os_window_close = 0;
 
-        background = self.theme.base00;
+        background = "#0b0b0b"; #self.theme.base00;
         foreground = self.theme.base06;
 
         selection_foreground = self.theme.base06;

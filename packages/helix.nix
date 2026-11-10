@@ -125,7 +125,7 @@
         "diagnostic.unnecessary" = {modifiers = ["dim"];};
 
         # ---------- ui ----------
-        "ui.background" = {fg = "fg"; bg = "bg";};
+        "ui.background" = {};
         "ui.text" = "fg";
         "ui.text.focus" = {bg = "bg2";};
         "ui.text.inactive" = "gray";

@@ -12,7 +12,8 @@ A small, dendritic NixOS flake with an optional ephemeral root.
 
 <img src="screenshots/s1.png" alt="screenshot" width="720">
 <img src="screenshots/s2.png" alt="screnshots" width="720">
-
+<img src="screenshots/s3.png" alt="screnshots" width="720">
+  
 </div>
 
 ---
@@ -22,7 +23,7 @@ A small, dendritic NixOS flake with an optional ephemeral root.
 - **Flakes + flake-parts**: every `.nix` file is auto-imported (dendritic style)
 - **niri** + a custom **Quickshell** bar and launcher
 - **Impermanence**: tmpfs root, wiped each boot (on by default, easy to switch off)
-- **sops-nix** for passwords, **wrapped** programs, Gruvbox-ish theme, IBM Plex
+- **sops-nix** for passwords, **wrapped** programs, Monochrome theme, IBM Plex
 
 ## Keybindings
 
@@ -162,7 +163,7 @@ Passwords are managed through sops, so `passwd` changes are lost on reboot. Chan
 ├── dev.nix              devShells (nixos, python, rust, phone)
 ├── hosts/potato/        host config, hardware, boot, locale, drivers
 ├── impermanence/        tmpfs root + preservation
-├── system/              ui, theme, gtk, services, apps, wallpaper
+├── OS/                  ui, theme, gtk, services, apps, wallpaper
 ├── packages/            all apps, wrapped programs (niri, kitty, fish, helix, ...)
 ├── users/               primary user
 └── secrets/             sops-encrypted yaml
