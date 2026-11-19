@@ -18,10 +18,13 @@
   
     services.udisks2.enable = true; # mount USB drives
     services.gvfs.enable = true;    # trash, network mounts in file managers
-
+    programs.obs-studio.enable = true;
+    
     environment.systemPackages = [
-        pkgs.wl-screenrec
         pkgs.slurp
+        pkgs.grim
+        pkgs.libnotify
+        pkgs.wl-clipboard
     ];
     # services.printing.enable = true;
     # services.avahi = {

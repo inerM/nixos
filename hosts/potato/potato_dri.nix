@@ -13,8 +13,8 @@
     };
 
     environment.systemPackages = with pkgs; [
-      mesa
       vulkan-tools
+      libva-utils
     ];
 
     environment.sessionVariables = {

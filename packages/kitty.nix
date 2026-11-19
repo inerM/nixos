@@ -21,7 +21,8 @@
 
       env.FONTCONFIG_FILE = toString (config.pkgs.makeFontsConf {
         fontDirectories = [
-          config.pkgs.ibm-plex # config.pkgs.nerd-fonts.space-mono 
+          config.pkgs.ibm-plex
+          config.pkgs.nerd-fonts.space-mono 
           config.pkgs.nerd-fonts.symbols-only
           config.pkgs.noto-fonts-color-emoji
           config.pkgs.noto-fonts-cjk-sans 
@@ -33,8 +34,11 @@
         background_opacity = 0.7;
 
         font_size = 10;
-        font_family = "IBM Plex Mono";
-
+        font_family = "SpaceMono Nerd Font Mono";
+        bold_font = ''family="IBM Plex Mono" style=Bold'';
+        italic_font = ''family="IBM Plex Mono" style=Italic'';
+        bold_italic_font = ''family="IBM Plex Mono" style="Bold Italic"'';
+        
         allow_remote_control = "yes";
         shell_integration = "enabled";
 

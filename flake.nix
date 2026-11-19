@@ -9,6 +9,9 @@
 
     preservation.url = "github:nix-community/preservation";
 
+#    noctalia.url = "github:noctalia-dev/noctalia/cachix";   # latest build CI has already cached
+    umbriel.url  = "github:noctalia-dev/umbriel/cachix";  
+
     quickshell-config = {                                                 # linked to my repo
     	url = "git+https://codeberg.org/inerM/quickshell";     
 	    flake = false;
