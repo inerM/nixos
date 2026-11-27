@@ -15,6 +15,12 @@
     services.udev.packages = [ pkgs.brightnessctl ];
     services.dbus.enable = true;
     security.polkit.enable = true;
+    services.sunshine = {
+      enable = true;
+      autoStart = true;
+      capSysAdmin = true;
+      openFirewall = true;
+    };
   
     services.udisks2.enable = true; # mount USB drives
     services.gvfs.enable = true;    # trash, network mounts in file managers

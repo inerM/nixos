@@ -5,7 +5,7 @@
 	      gtk
    	    fonts
 	      ly
-				umbriel
+#				umbriel
 #				noctalia
 #				noctalia-greeter
       ];
@@ -15,8 +15,8 @@
     programs.niri.enable = true;
     programs.niri.package =
     self.packages.${pkgs.stdenv.hostPlatform.system}.desktop;
-    environment.systemPackages = [
-      self.packages.${pkgs.stdenv.hostPlatform.system}.terminal ];
+ #   environment.systemPackages = [
+  #    self.packages.${pkgs.stdenv.hostPlatform.system}.terminal ];
 
    };
 }

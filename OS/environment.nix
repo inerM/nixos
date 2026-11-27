@@ -30,37 +30,28 @@
       inherit pkgs;
       package = self'.packages.fish;
       runtimePkgs = [
-
-	      pkgs.nil
-	      pkgs.nixd
-	      pkgs.statix
 	      pkgs.alejandra
-	      pkgs.manix
-	      pkgs.nix-inspect
         # other
+        pkgs.tree
         pkgs.unzip
         pkgs.zip
         pkgs.p7zip
-        pkgs.wget
-        pkgs.killall
         pkgs.fzf
         pkgs.btop
         pkgs.eza
         pkgs.fd
         pkgs.zoxide
         pkgs.ripgrep
-        pkgs.fastfetch
-        pkgs.tree-sitter
         pkgs.ffmpeg
         pkgs.lazygit
 	
         # wrapped
+        self'.packages.fastfetch
         self'.packages.nh
         self'.packages.helix
 	      self'.packages.qalc
 	      self'.packages.jujutsu
 	      self'.packages.jjui
-#	      self'.packages.elio	
       ];
       env = {
         EDITOR = lib.getExe self'.packages.helix;

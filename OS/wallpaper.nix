@@ -1,3 +1,3 @@
 {
-  flake.wallpaper = ../assets/W1.png;
+  flake.wallpaper = ../assets/w2.jpg;
 }

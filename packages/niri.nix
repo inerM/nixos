@@ -140,7 +140,7 @@
 
         layout = {
           background-color = "transparent";
-          gaps = 4;
+          gaps = 5;
           default-column-width.proportion = 0.65;
           always-center-single-column = true;
 
@@ -184,10 +184,10 @@
 
             draw-border-with-background = false;
 
-            background-effect = {
-              blur = true;
-              xray = true;
-            };
+#            background-effect = {
+#              blur = true;
+#              xray = true;
+#            };
           }
           {
             matches = [
@@ -197,10 +197,10 @@
             default-column-width.proportion = 0.55;
             default-window-height.proportion = 0.65;
             draw-border-with-background = false;
-            background-effect = {
-              blur = true;
-              xray = false;
-              };
+#            background-effect = {
+#              blur = true;
+#              xray = false;
+#              };
           }
           {
             matches = [{ app-id = "^helium$"; }];
@@ -208,12 +208,12 @@
           }
         ];
 
-        blur = {
-            passes = 1;
-            offset = 0;
-            noise = 0.05;
-            saturation = 1.0;
-        };
+#        blur = {
+#            passes = 1;
+#            offset = 0;
+#            noise = 0.05;
+#            saturation = 1.0;
+#        };
 
         cursor = {
           xcursor-theme = "Bibata-Modern-Classic";

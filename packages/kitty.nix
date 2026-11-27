@@ -31,8 +31,11 @@
 
       settings = {
         enable_audio_bell = "no";
-        background_opacity = 0.7;
-
+    #    background_opacity = 0.7;
+        background_image = "${../assets/kitty-bg.png}";
+        background_image_layout = "cscaled";
+        background_tint = 0.30;
+                 
         font_size = 10;
         font_family = "SpaceMono Nerd Font Mono";
         bold_font = ''family="IBM Plex Mono" style=Bold'';

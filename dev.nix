@@ -10,17 +10,21 @@
     rustTools = with pkgs; [
       cargo rustc rust-analyzer clippy rustfmt
     ];
-  in {
-    devShells = {
-      default = pkgs.mkShell { packages = nixTools ++ pythonTools ++ phoneTools ++ rustTools; };
-      nixos   = pkgs.mkShell { packages = nixTools; };
-      phone   = pkgs.mkShell { packages = phoneTools; };
-      python  = pkgs.mkShell { packages = pythonTools; };
-      rust    = pkgs.mkShell {
-        packages = rustTools;
-        nativeBuildInputs = [ pkgs.pkg-config ];
-        buildInputs = [ pkgs.openssl ];
-        RUST_SRC_PATH = "${pkgs.rustPlatform.rustLibSrc}";
+
+    mk = label: color: attrs:
+      pkgs.mkShell ({DEVSHELL_NAME = "${label}/${color}";} // attrs);
+      
+in {
+  devShells = {
+    default = mk "dev"    "green"   {packages = nixTools ++ pythonTools ++ phoneTools ++ rustTools;};
+    nixos   = mk "nixos"  "blue"    {packages = nixTools;};
+    phone   = mk "phone"  "magenta" {packages = phoneTools;};
+    python  = mk "python" "yellow"  {packages = pythonTools;};
+    rust    = mk "rust"   "red"     {
+      packages = rustTools;
+      nativeBuildInputs = [pkgs.pkg-config];
+      buildInputs = [pkgs.openssl];
+      RUST_SRC_PATH = "${pkgs.rustPlatform.rustLibSrc}";
       };
     };
   };
